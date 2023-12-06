@@ -1,5 +1,6 @@
 package com.windstorm.management.service.member;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.windstorm.management.controller.member.request.MemberCreate;
+import com.windstorm.management.controller.member.request.MemberLogin;
 import com.windstorm.management.controller.member.response.MemberResponse;
 import com.windstorm.management.domain.member.Member;
 import com.windstorm.management.repository.member.MemberRepository;
@@ -42,5 +44,15 @@ public class MemberService {
 		);
 
 		return MemberResponse.toResponse(memberRepository.save(member));
+	}
+
+	@Transactional
+	public MemberResponse login(MemberLogin request) {
+		Optional<Member> findResult = memberRepository.findByUniqueMemberId(request.uniqueMemberId());
+		if (findResult.isEmpty()) {
+			throw new NoSuchElementException("교적번호 " + request.uniqueMemberId() + "에 해당하는 데이터가 존재하지 않습니다.");
+		}
+
+		return MemberResponse.toResponse(findResult.get());
 	}
 }

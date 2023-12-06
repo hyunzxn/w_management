@@ -1,5 +1,7 @@
 package com.windstorm.management.controller.global;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
@@ -33,6 +35,20 @@ public class ApiControllerAdvice {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ApiResponse<Object> dataIntegrityViolationExceptionHandler(DataIntegrityViolationException e) {
+		log.error(e.getMessage(), e);
+		return ApiResponse.of(
+			HttpStatus.INTERNAL_SERVER_ERROR,
+			e.getMessage(),
+			null
+		);
+	}
+
+	/**
+	 * DB에서 데이터를 조회했을 때 데이터가 존재하지 않는 경우에 발생하는 에러를 컨트롤
+	 */
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(NoSuchElementException.class)
+	public ApiResponse<Object> noSuchElementExceptionHandler(NoSuchElementException e) {
 		log.error(e.getMessage(), e);
 		return ApiResponse.of(
 			HttpStatus.INTERNAL_SERVER_ERROR,
