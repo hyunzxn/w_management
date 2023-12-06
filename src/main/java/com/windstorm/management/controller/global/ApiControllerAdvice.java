@@ -56,4 +56,18 @@ public class ApiControllerAdvice {
 			null
 		);
 	}
+
+	/**
+	 * 요청을 보낼 때 값을 잘못되게 보내는 경우에 발생하는 에러를 컨트롤
+	 */
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ApiResponse<Object> illegalArgumentExceptionHandler(IllegalArgumentException e) {
+		log.error(e.getMessage(), e);
+		return ApiResponse.of(
+			HttpStatus.BAD_REQUEST,
+			e.getMessage(),
+			null
+		);
+	}
 }

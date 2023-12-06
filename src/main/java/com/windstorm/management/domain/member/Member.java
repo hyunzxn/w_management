@@ -62,7 +62,8 @@ public class Member {
 		this.address = address;
 	}
 
-	public static Member create(String uniqueMemberId, String name, String password, LocalDate birthDate, Division division,
+	public static Member create(String uniqueMemberId, String name, String password, LocalDate birthDate,
+		Division division,
 		Gender gender, LeaderRole role, String phoneNumber, String address) {
 		return Member.builder()
 			.uniqueMemberId(uniqueMemberId)
