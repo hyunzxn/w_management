@@ -18,6 +18,6 @@ public class MemberReader {
 
 	public Member read(String uniqueMemberId) {
 		return memberRepository.findByUniqueMemberId(uniqueMemberId)
-			.orElseThrow(() -> new NoSuchElementException("교적번호: " + uniqueMemberId + "에 해당하는 데이터가 존재하지 않습니다."));
+			.orElseThrow(() -> new RuntimeException("교적번호: " + uniqueMemberId + "에 해당하는 데이터가 존재하지 않습니다."));
 	}
 }

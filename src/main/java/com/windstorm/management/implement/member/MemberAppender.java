@@ -20,21 +20,21 @@ public class MemberAppender {
 
 	@Transactional
 	public Member append(MemberCreate request) {
-		try {
-			Member newMember = Member.create(
-				request.uniqueMemberId(),
-				request.name(),
-				request.name(),
-				request.birthDate(),
-				request.division(),
-				request.gender(),
-				request.role(),
-				request.phoneNumber(),
-				request.address()
-			);
-			return memberRepository.save(newMember);
-		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("교적번호: " + request.uniqueMemberId() + "에 해당하는 데이터가 이미 존재합니다.");
-		}
+			try {
+				Member newMember = Member.create(
+					request.uniqueMemberId(),
+					request.name(),
+					request.name(),
+					request.birthDate(),
+					request.division(),
+					request.gender(),
+					request.role(),
+					request.phoneNumber(),
+					request.address()
+				);
+				return memberRepository.save(newMember);
+			} catch (DataIntegrityViolationException e) {
+				throw new RuntimeException("교적번호: " + request.uniqueMemberId() + "에 해당하는 데이터가 이미 존재합니다.");
+			}
 	}
 }

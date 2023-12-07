@@ -30,25 +30,12 @@ public class ApiControllerAdvice {
 	}
 
 	/**
-	 * DB에서 데이터를 조회했을 때 이미 데이터가 존재하는 경우에 발생하는 에러를 컨트롤
+	 * Runtime 실행 중 발생하는 에러를 컨트롤
+	 * ex) DB Data정합성오류, DB 조회 시 데이터 없음 등
 	 */
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler(DataIntegrityViolationException.class)
-	public ApiResponse<Object> dataIntegrityViolationExceptionHandler(DataIntegrityViolationException e) {
-		log.error(e.getMessage(), e);
-		return ApiResponse.of(
-			HttpStatus.INTERNAL_SERVER_ERROR,
-			e.getMessage(),
-			null
-		);
-	}
-
-	/**
-	 * DB에서 데이터를 조회했을 때 데이터가 존재하지 않는 경우에 발생하는 에러를 컨트롤
-	 */
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler(NoSuchElementException.class)
-	public ApiResponse<Object> noSuchElementExceptionHandler(NoSuchElementException e) {
+	@ExceptionHandler(RuntimeException.class)
+	public ApiResponse<Object> runtimeExceptionHandler(RuntimeException e) {
 		log.error(e.getMessage(), e);
 		return ApiResponse.of(
 			HttpStatus.INTERNAL_SERVER_ERROR,
