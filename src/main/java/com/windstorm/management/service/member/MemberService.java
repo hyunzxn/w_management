@@ -10,7 +10,6 @@ import com.windstorm.management.implement.member.MemberAppender;
 import com.windstorm.management.implement.member.MemberLoginManager;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
