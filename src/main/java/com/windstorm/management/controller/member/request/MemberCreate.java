@@ -5,11 +5,9 @@ import java.time.LocalDate;
 import com.windstorm.management.domain.member.Division;
 import com.windstorm.management.domain.member.Gender;
 import com.windstorm.management.domain.member.LeaderRole;
-import com.windstorm.management.domain.member.Member;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 
 @Builder
@@ -37,4 +35,5 @@ public record MemberCreate(
 
 	@NotBlank(message = "주소를 입력해주세요.")
 	String address
-){}
+) {
+}

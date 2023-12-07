@@ -1,8 +1,5 @@
 package com.windstorm.management.controller.global;
 
-import java.util.NoSuchElementException;
-
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
