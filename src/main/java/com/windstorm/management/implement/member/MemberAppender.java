@@ -34,7 +34,7 @@ public class MemberAppender {
 			);
 			return memberRepository.save(newMember);
 		} catch (DataIntegrityViolationException e) {
-			throw new RuntimeException("교적번호: " + request.uniqueMemberId() + "에 해당하는 데이터가 이미 존재합니다.");
+			throw new RuntimeException("교적번호: " + request.uniqueMemberId() + "에 해당하는 데이터가 이미 존재합니다.", e);
 		}
 	}
 }
