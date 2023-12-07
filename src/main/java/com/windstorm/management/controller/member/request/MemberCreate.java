@@ -14,7 +14,7 @@ import lombok.Builder;
 
 @Builder
 public record MemberCreate(
-	@NotNull(message = "교적번호를 입력해주세요.")
+	@NotBlank(message = "교적번호를 입력해주세요.")
 	String uniqueMemberId,
 
 	@NotBlank(message = "이름을 입력해주세요.")
