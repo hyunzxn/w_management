@@ -1,4 +1,4 @@
-package com.windstorm.management.controller.member.request;
+package com.windstorm.management.controller.auth.request;
 
 import java.time.LocalDate;
 
@@ -11,7 +11,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-public record MemberCreate(
+public record Signup(
 	@NotBlank(message = "교적번호를 입력해주세요.")
 	String uniqueMemberId,
 

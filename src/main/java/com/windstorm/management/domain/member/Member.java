@@ -3,6 +3,8 @@ package com.windstorm.management.domain.member;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -81,5 +83,9 @@ public class Member {
 	public int calculateAgeGroup(LocalDate birthDate) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		return Integer.parseInt(birthDate.format(formatter).substring(0, 4)) - ORIGIN_YEAR;
+	}
+
+	public void encodePassword(PasswordEncoder passwordEncoder) {
+		this.password = passwordEncoder.encode(this.password);
 	}
 }
