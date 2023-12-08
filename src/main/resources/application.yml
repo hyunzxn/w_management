@@ -4,6 +4,8 @@ spring:
     group:
       dev: dev
       test: test
+jwt:
+  secret: cd68f79261b7ff2b74a8693201cdf5712fa5e58f4768e513eeee1a819cf6b143
 ---
 # Local 환경
 spring:
