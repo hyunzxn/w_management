@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.windstorm.management.controller.member.request.PasswordModify;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -87,5 +89,9 @@ public class Member {
 
 	public void encodePassword(PasswordEncoder passwordEncoder) {
 		this.password = passwordEncoder.encode(this.password);
+	}
+
+	public void modifyPassword(PasswordModify request) {
+		this.password = request.password();
 	}
 }

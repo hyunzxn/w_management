@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.windstorm.management.implement.member.MemberReader;
+import com.windstorm.management.security.CustomUserDetailsService;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -30,10 +33,13 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtProvider {
 
 	private final Key key;
+	private final CustomUserDetailsService userDetailsService;
 
-	public JwtProvider(@Value("${jwt.secret}") String secretKey) {
+	public JwtProvider(@Value("${jwt.secret}") String secretKey,
+		CustomUserDetailsService userDetailsService) {
 		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
 		this.key = Keys.hmacShaKeyFor(keyBytes);
+		this.userDetailsService = userDetailsService;
 	}
 
 	public JwtResponse generateToken(Authentication authentication) {
@@ -79,8 +85,8 @@ public class JwtProvider {
 			.collect(Collectors.toList());
 
 		// UserDetails 객체를 만들어서 Authentication return
-		UserDetails principal = new User(claims.getSubject(), "", authorities);
-		return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+		UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
+		return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
 	}
 
 	// 토큰 정보를 검증하는 메서드
