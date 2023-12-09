@@ -10,7 +10,7 @@ import com.windstorm.management.controller.auth.request.Login;
 import com.windstorm.management.controller.auth.request.Signup;
 import com.windstorm.management.controller.global.ApiResponse;
 import com.windstorm.management.controller.member.response.MemberResponse;
-import com.windstorm.management.security.jwt.JwtToken;
+import com.windstorm.management.security.jwt.JwtResponse;
 import com.windstorm.management.service.auth.AuthService;
 
 import jakarta.validation.Valid;
@@ -28,7 +28,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public ApiResponse<JwtToken> login(@Valid @RequestBody Login request) {
+	public ApiResponse<JwtResponse> login(@Valid @RequestBody Login request) {
 		return ApiResponse.of(HttpStatus.OK, "로그인에 성공하였습니다.", authService.login(request));
 	}
 }

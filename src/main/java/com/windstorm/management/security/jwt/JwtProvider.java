@@ -27,16 +27,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class JwtTokenProvider {
+public class JwtProvider {
 
 	private final Key key;
 
-	public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+	public JwtProvider(@Value("${jwt.secret}") String secretKey) {
 		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
 		this.key = Keys.hmacShaKeyFor(keyBytes);
 	}
 
-	public JwtToken generateToken(Authentication authentication) {
+	public JwtResponse generateToken(Authentication authentication) {
 		String authorities = authentication.getAuthorities().stream()
 			.map(GrantedAuthority::getAuthority)
 			.collect(Collectors.joining(","));
@@ -58,7 +58,7 @@ public class JwtTokenProvider {
 			.signWith(key, SignatureAlgorithm.HS256)
 			.compact();
 
-		return JwtToken.builder()
+		return JwtResponse.builder()
 			.grantType("Bearer")
 			.accessToken(accessToken)
 			.refreshToken(refreshToken)

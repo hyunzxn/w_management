@@ -1,4 +1,4 @@
-package com.windstorm.management.security;
+package com.windstorm.management.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +20,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.windstorm.management.domain.member.Member;
 import com.windstorm.management.repository.member.MemberRepository;
+import com.windstorm.management.security.UserPrincipal;
 import com.windstorm.management.security.handler.Http401Handler;
 import com.windstorm.management.security.handler.Http403Handler;
 import com.windstorm.management.security.jwt.JwtAuthenticationFilter;
-import com.windstorm.management.security.jwt.JwtTokenProvider;
+import com.windstorm.management.security.jwt.JwtProvider;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-	private final JwtTokenProvider jwtTokenProvider;
+	private final JwtProvider jwtProvider;
 	private final MemberRepository memberRepository;
 	private final ObjectMapper objectMapper;
 
@@ -52,7 +53,7 @@ public class SecurityConfig {
 				e.authenticationEntryPoint(new Http401Handler(objectMapper));
 				e.accessDeniedHandler(new Http403Handler(objectMapper));
 			})
-			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+			.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
 			.build();
 	}
 

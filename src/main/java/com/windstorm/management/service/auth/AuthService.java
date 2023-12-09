@@ -8,7 +8,7 @@ import com.windstorm.management.controller.member.response.MemberResponse;
 import com.windstorm.management.domain.member.Member;
 import com.windstorm.management.implement.member.MemberAppender;
 import com.windstorm.management.implement.member.MemberLoginManager;
-import com.windstorm.management.security.jwt.JwtToken;
+import com.windstorm.management.security.jwt.JwtResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +24,7 @@ public class AuthService {
 		return MemberResponse.toResponse(newMember);
 	}
 
-	public JwtToken login(Login request) {
+	public JwtResponse login(Login request) {
 		return loginManager.login(request);
 	}
 }
