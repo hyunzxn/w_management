@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.windstorm.management.domain.member.Member;
 import com.windstorm.management.repository.member.MemberRepository;
+import com.windstorm.management.security.CustomUserDetailsService;
 import com.windstorm.management.security.UserPrincipal;
 import com.windstorm.management.security.handler.Http401Handler;
 import com.windstorm.management.security.handler.Http403Handler;
@@ -33,8 +34,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 	private final JwtProvider jwtProvider;
-	private final MemberRepository memberRepository;
 	private final ObjectMapper objectMapper;
+	private final CustomUserDetailsService userDetailsService;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -60,7 +61,7 @@ public class SecurityConfig {
 	@Bean
 	public AuthenticationManager authenticationManager() {
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(userDetailsService(memberRepository));
+		provider.setUserDetailsService(userDetailsService);
 		provider.setPasswordEncoder(passwordEncoder());
 		return new ProviderManager(provider);
 	}
@@ -68,14 +69,5 @@ public class SecurityConfig {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-	}
-
-	@Bean
-	public UserDetailsService userDetailsService(MemberRepository memberRepository) {
-		return uniqueMemberId -> {
-			Member member = memberRepository.findByUniqueMemberId(uniqueMemberId)
-				.orElseThrow(() -> new UsernameNotFoundException("교적번호: " + uniqueMemberId + "을 찾을 수 없습니다."));
-			return new UserPrincipal(member);
-		};
 	}
 }

@@ -9,18 +9,18 @@ import com.windstorm.management.domain.member.Member;
 
 public class UserPrincipal extends User {
 
-	private final Long memberId;
+	private final String uniqueMemberId;
 
 	public UserPrincipal(Member member) {
 		super(
-			member.getName(),
+			member.getUniqueMemberId(),
 			member.getPassword(),
 			List.of(new SimpleGrantedAuthority("ROLE_" + member.getRole()))
 		);
-		this.memberId = member.getId();
+		this.uniqueMemberId = member.getUniqueMemberId();
 	}
 
-	public Long getUserId() {
-		return memberId;
+	public String getUniqueMemberId() {
+		return uniqueMemberId;
 	}
 }
