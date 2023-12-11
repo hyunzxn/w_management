@@ -16,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.windstorm.management.domain.global.LeaderRole;
 import com.windstorm.management.security.CustomUserDetailsService;
 import com.windstorm.management.security.handler.Http401Handler;
 import com.windstorm.management.security.handler.Http403Handler;
@@ -43,6 +44,7 @@ public class SecurityConfig {
 			.authorizeHttpRequests((authorizeRequests) ->
 				authorizeRequests
 					.requestMatchers("/", "/api/auth/**").permitAll()
+					.requestMatchers("/api/admin/**").hasAnyRole(String.valueOf(LeaderRole.PASTOR))
 					.anyRequest().authenticated()
 			)
 			.exceptionHandling(e -> {
