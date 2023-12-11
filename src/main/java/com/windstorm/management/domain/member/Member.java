@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.windstorm.management.controller.member.request.PasswordModify;
+import com.windstorm.management.domain.global.Division;
+import com.windstorm.management.domain.global.Gender;
+import com.windstorm.management.domain.global.LeaderRole;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

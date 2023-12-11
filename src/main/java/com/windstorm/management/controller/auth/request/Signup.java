@@ -2,9 +2,9 @@ package com.windstorm.management.controller.auth.request;
 
 import java.time.LocalDate;
 
-import com.windstorm.management.domain.member.Division;
-import com.windstorm.management.domain.member.Gender;
-import com.windstorm.management.domain.member.LeaderRole;
+import com.windstorm.management.domain.global.Division;
+import com.windstorm.management.domain.global.Gender;
+import com.windstorm.management.domain.global.LeaderRole;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

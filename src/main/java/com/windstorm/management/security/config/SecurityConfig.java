@@ -10,18 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.windstorm.management.domain.member.Member;
-import com.windstorm.management.repository.member.MemberRepository;
 import com.windstorm.management.security.CustomUserDetailsService;
-import com.windstorm.management.security.UserPrincipal;
 import com.windstorm.management.security.handler.Http401Handler;
 import com.windstorm.management.security.handler.Http403Handler;
 import com.windstorm.management.security.jwt.JwtAuthenticationFilter;

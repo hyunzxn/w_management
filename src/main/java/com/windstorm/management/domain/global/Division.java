@@ -1,4 +1,4 @@
-package com.windstorm.management.domain.member;
+package com.windstorm.management.domain.global;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
