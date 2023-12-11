@@ -15,7 +15,7 @@ public record MemberResponse(
 	Long id,
 	String uniqueMemberId,
 	String name,
-	Cell cell,
+	String cellName,
 	LocalDate birthDate,
 	int ageGroup,
 	Division division,
@@ -30,7 +30,7 @@ public record MemberResponse(
 			.id(member.getId())
 			.uniqueMemberId(member.getUniqueId())
 			.name(member.getName())
-			.cell(member.getCell())
+			.cellName(member.getCell() == null ? "새가족" : member.getCell().getName())
 			.birthDate(member.getBirthDate())
 			.ageGroup(member.calculateAgeGroup(member.getBirthDate()))
 			.division(member.getDivision())

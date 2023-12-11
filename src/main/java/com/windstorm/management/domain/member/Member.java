@@ -104,4 +104,8 @@ public class Member {
 	public void modifyPassword(PasswordModify request) {
 		this.password = request.password();
 	}
+
+	public void defineCell(Cell cell) {
+		this.cell = cell;
+	}
 }
