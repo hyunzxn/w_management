@@ -17,7 +17,7 @@ public class MemberReader {
 	private final MemberRepository memberRepository;
 
 	public Member read(String uniqueId) {
-		return memberRepository.findByUniqueMemberId(uniqueId)
+		return memberRepository.findByUniqueId(uniqueId)
 			.orElseThrow(() -> new RuntimeException("교적번호: " + uniqueId + "에 해당하는 데이터가 존재하지 않습니다."));
 	}
 
