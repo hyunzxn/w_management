@@ -2,6 +2,7 @@ package com.windstorm.management.controller.member.response;
 
 import java.time.LocalDate;
 
+import com.windstorm.management.domain.cell.Cell;
 import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.global.Gender;
 import com.windstorm.management.domain.global.LeaderRole;
@@ -14,6 +15,7 @@ public record MemberResponse(
 	Long id,
 	String uniqueMemberId,
 	String name,
+	Cell cell,
 	LocalDate birthDate,
 	int ageGroup,
 	Division division,
@@ -26,8 +28,9 @@ public record MemberResponse(
 	public static MemberResponse toResponse(Member member) {
 		return MemberResponse.builder()
 			.id(member.getId())
-			.uniqueMemberId(member.getUniqueMemberId())
+			.uniqueMemberId(member.getUniqueId())
 			.name(member.getName())
+			.cell(member.getCell())
 			.birthDate(member.getBirthDate())
 			.ageGroup(member.calculateAgeGroup(member.getBirthDate()))
 			.division(member.getDivision())

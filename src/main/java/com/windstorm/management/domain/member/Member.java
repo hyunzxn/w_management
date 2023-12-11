@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.windstorm.management.controller.member.request.PasswordModify;
+import com.windstorm.management.domain.cell.Cell;
 import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.global.Gender;
 import com.windstorm.management.domain.global.LeaderRole;
@@ -17,6 +18,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,7 +37,7 @@ public class Member {
 	private Long id;
 
 	@Column(unique = true)
-	private String uniqueMemberId; // 교적번호
+	private String uniqueId; // 교적번호
 
 	private String name;
 
@@ -55,10 +58,14 @@ public class Member {
 
 	private String address;
 
+	@ManyToOne
+	@JoinColumn(name = "cell_id")
+	private Cell cell;
+
 	@Builder
-	private Member(String uniqueMemberId, String name, String password, LocalDate birthDate, Division division,
+	private Member(String uniqueId, String name, String password, LocalDate birthDate, Division division,
 		Gender gender, LeaderRole role, String phoneNumber, String address) {
-		this.uniqueMemberId = uniqueMemberId;
+		this.uniqueId = uniqueId;
 		this.name = name;
 		this.password = password;
 		this.birthDate = birthDate;
@@ -69,11 +76,11 @@ public class Member {
 		this.address = address;
 	}
 
-	public static Member create(String uniqueMemberId, String name, String password, LocalDate birthDate,
+	public static Member create(String uniqueId, String name, String password, LocalDate birthDate,
 		Division division,
 		Gender gender, LeaderRole role, String phoneNumber, String address) {
 		return Member.builder()
-			.uniqueMemberId(uniqueMemberId)
+			.uniqueId(uniqueId)
 			.name(name)
 			.password(password)
 			.birthDate(birthDate)
