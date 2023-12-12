@@ -8,5 +8,5 @@ import com.windstorm.management.domain.member.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
 
-	Optional<Member> findByUniqueMemberId(String uniqueMemberId);
+	Optional<Member> findByUniqueId(String uniqueId);
 }

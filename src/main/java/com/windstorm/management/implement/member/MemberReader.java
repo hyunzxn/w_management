@@ -16,9 +16,9 @@ import lombok.RequiredArgsConstructor;
 public class MemberReader {
 	private final MemberRepository memberRepository;
 
-	public Member read(String uniqueMemberId) {
-		return memberRepository.findByUniqueMemberId(uniqueMemberId)
-			.orElseThrow(() -> new RuntimeException("교적번호: " + uniqueMemberId + "에 해당하는 데이터가 존재하지 않습니다."));
+	public Member read(String uniqueId) {
+		return memberRepository.findByUniqueId(uniqueId)
+			.orElseThrow(() -> new RuntimeException("교적번호: " + uniqueId + "에 해당하는 데이터가 존재하지 않습니다."));
 	}
 
 	public List<Member> readByName(String name) {

@@ -7,20 +7,19 @@ import org.springframework.security.core.userdetails.User;
 
 import com.windstorm.management.domain.member.Member;
 
+import lombok.Getter;
+
+@Getter
 public class UserPrincipal extends User {
 
-	private final String uniqueMemberId;
+	private final String uniqueId;
 
 	public UserPrincipal(Member member) {
 		super(
-			member.getUniqueMemberId(),
+			member.getUniqueId(),
 			member.getPassword(),
 			List.of(new SimpleGrantedAuthority("ROLE_" + member.getRole()))
 		);
-		this.uniqueMemberId = member.getUniqueMemberId();
-	}
-
-	public String getUniqueMemberId() {
-		return uniqueMemberId;
+		this.uniqueId = member.getUniqueId();
 	}
 }
