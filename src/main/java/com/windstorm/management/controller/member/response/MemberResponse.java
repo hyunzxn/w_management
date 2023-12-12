@@ -9,6 +9,7 @@ import com.windstorm.management.domain.global.LeaderRole;
 import com.windstorm.management.domain.member.Member;
 
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder
 public record MemberResponse(
