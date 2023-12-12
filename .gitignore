@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### http ###
-./http
+http
