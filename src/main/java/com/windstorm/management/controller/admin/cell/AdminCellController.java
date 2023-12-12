@@ -31,7 +31,7 @@ public class AdminCellController {
 
 	@PostMapping("/members")
 	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<Object> addMember(@RequestBody CellAddMember request) {
+	public ApiResponse<Object> addMember(@Valid @RequestBody CellAddMember request) {
 		cellService.addMember(request);
 		return ApiResponse.of(HttpStatus.OK, "새로운 셀원이 추가되었습니다.", null);
 	}
