@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.windstorm.management.controller.admin.member.request.MemberModify;
 import com.windstorm.management.controller.member.request.PasswordModify;
 import com.windstorm.management.controller.member.response.MemberResponse;
 import com.windstorm.management.domain.member.Member;
@@ -28,8 +29,17 @@ public class MemberService {
 			.toList();
 	}
 
-	public void modify(String uniqueId, PasswordModify request) {
+	public void modifyPassword(String uniqueId, PasswordModify request) {
 		Member member = memberReader.read(uniqueId);
 		memberModifier.modifyPassword(member, request);
+	}
+
+	public MemberResponse modify(String uniqueId, MemberModify request) {
+		if (uniqueId.isEmpty()) {
+			throw new IllegalArgumentException("교적번호가 입력되지 않았습니다.");
+		}
+		Member member = memberReader.read(uniqueId);
+		memberModifier.modify(member, request);
+		return MemberResponse.toResponse(member);
 	}
 }
