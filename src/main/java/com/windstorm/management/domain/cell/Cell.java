@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.member.Member;
+import com.windstorm.management.domain.unit.Unit;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -13,6 +14,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -36,6 +39,10 @@ public class Cell {
 	@OneToMany(mappedBy = "cell", cascade = CascadeType.ALL)
 	private List<Member> members = new ArrayList<>();
 
+	@ManyToOne
+	@JoinColumn(name = "unit_id")
+	private Unit unit;
+
 	@Builder
 	private Cell(String name, Division division) {
 		this.name = name;
@@ -52,5 +59,9 @@ public class Cell {
 	public void addMember(Member member) {
 		member.defineCell(this);
 		this.members.add(member);
+	}
+
+	public void defineUnit(Unit unit) {
+		this.unit = unit;
 	}
 }
