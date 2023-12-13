@@ -12,6 +12,9 @@ public record CellCreate(
 	String name,
 
 	@NotNull(message = "청년부 이름을 입력해주세요.")
-	Division division
+	Division division,
+
+	@NotBlank(message = "진 이름을 입력해주세요.")
+	String unitName
 ) {
 }
