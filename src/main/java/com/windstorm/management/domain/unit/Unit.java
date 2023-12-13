@@ -48,9 +48,4 @@ public class Unit {
 			.name(name)
 			.build();
 	}
-
-	public void addCell(Cell cell) {
-		cell.defineUnit(this);
-		this.cells.add(cell);
-	}
 }
