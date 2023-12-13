@@ -12,6 +12,7 @@ import lombok.Builder;
 public record UnitResponse(
 	Division division,
 	String name,
+	String managerName,
 	List<CellResponse> cells
 ) {
 
@@ -23,6 +24,7 @@ public record UnitResponse(
 		return UnitResponse.builder()
 			.division(unit.getDivision())
 			.name(unit.getName())
+			.managerName(unit.getName().substring(0, 3))
 			.cells(cells)
 			.build();
 	}
