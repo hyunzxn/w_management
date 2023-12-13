@@ -5,11 +5,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.windstorm.management.controller.cell.request.CellAddMember;
-import com.windstorm.management.controller.cell.request.CellCreate;
+import com.windstorm.management.controller.admin.cell.request.CellAddMember;
+import com.windstorm.management.controller.admin.cell.request.CellCreate;
 import com.windstorm.management.controller.cell.response.CellResponse;
 import com.windstorm.management.controller.global.ApiResponse;
 import com.windstorm.management.service.cell.CellService;
