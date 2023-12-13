@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.windstorm.management.controller.admin.member.request.MemberModify;
 import com.windstorm.management.controller.member.request.PasswordModify;
 import com.windstorm.management.domain.cell.Cell;
 import com.windstorm.management.domain.global.Division;
@@ -107,5 +108,16 @@ public class Member {
 
 	public void defineCell(Cell cell) {
 		this.cell = cell;
+	}
+
+	public void modify(MemberModify request) {
+		this.uniqueId = request.uniqueId();
+		this.name = request.name();
+		this.birthDate = request.birthDate();
+		this.division = request.division();
+		this.gender = request.gender();
+		this.role = request.role();
+		this.phoneNumber = request.phoneNumber();
+		this.address = request.address();
 	}
 }

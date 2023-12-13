@@ -1,4 +1,4 @@
-package com.windstorm.management.controller.cell.request;
+package com.windstorm.management.controller.admin.cell.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
