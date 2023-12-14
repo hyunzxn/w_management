@@ -6,7 +6,9 @@ import com.windstorm.management.controller.admin.cell.request.CellAddMember;
 import com.windstorm.management.controller.admin.cell.request.CellCreate;
 import com.windstorm.management.domain.cell.Cell;
 import com.windstorm.management.domain.member.Member;
+import com.windstorm.management.domain.unit.Unit;
 import com.windstorm.management.implement.member.MemberReader;
+import com.windstorm.management.implement.unit.UnitReader;
 import com.windstorm.management.repository.cell.CellRepository;
 
 import jakarta.transaction.Transactional;
@@ -18,10 +20,13 @@ public class CellAppender {
 	private final CellRepository cellRepository;
 	private final MemberReader memberReader;
 	private final CellReader cellReader;
+	private final UnitReader unitReader;
 
 	@Transactional
 	public Cell append(CellCreate request) {
+		Unit unit = unitReader.read(request.unitName());
 		Cell newCell = Cell.create(request.name(), request.division());
+		newCell.defineUnit(unit);
 		return cellRepository.save(newCell);
 	}
 

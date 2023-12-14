@@ -1,4 +1,4 @@
-package com.windstorm.management.controller.admin.cell.request;
+package com.windstorm.management.controller.admin.unit.request;
 
 import com.windstorm.management.domain.global.Division;
 
@@ -7,14 +7,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-public record CellCreate(
-	@NotBlank(message = "셀 이름을 입력해주세요.")
-	String name,
+public record UnitCreate(
 
-	@NotNull(message = "청년부 이름을 입력해주세요.")
+	@NotNull(message = "소속 청년부를 입력해주세요.")
 	Division division,
 
 	@NotBlank(message = "진 이름을 입력해주세요.")
-	String unitName
+	String name
 ) {
 }
