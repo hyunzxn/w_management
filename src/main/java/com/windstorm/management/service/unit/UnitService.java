@@ -16,6 +16,9 @@ public class UnitService {
 	private final UnitAppender unitAppender;
 	private final UnitReader unitReader;
 
+	/**
+	 * for Admin
+	 */
 	public UnitResponse append(UnitCreate request) {
 		Unit newUnit = unitAppender.append(request);
 		return UnitResponse.toResponse(newUnit);
