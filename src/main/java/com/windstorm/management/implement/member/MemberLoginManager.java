@@ -5,11 +5,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.windstorm.management.controller.auth.request.Login;
+import com.windstorm.management.api.user.auth.request.Login;
 import com.windstorm.management.domain.member.Member;
 import com.windstorm.management.implement.auth.AuthenticationGenerator;
-import com.windstorm.management.security.jwt.JwtProvider;
-import com.windstorm.management.security.jwt.JwtResponse;
+import com.windstorm.management.infrastructure.security.jwt.JwtProvider;
+import com.windstorm.management.infrastructure.security.jwt.JwtResponse;
 
 import lombok.RequiredArgsConstructor;
 

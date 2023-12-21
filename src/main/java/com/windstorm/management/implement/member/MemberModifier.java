@@ -3,8 +3,8 @@ package com.windstorm.management.implement.member;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.windstorm.management.controller.admin.member.request.MemberModify;
-import com.windstorm.management.controller.member.request.PasswordModify;
+import com.windstorm.management.api.admin.member.request.MemberModify;
+import com.windstorm.management.api.user.member.request.PasswordModify;
 import com.windstorm.management.domain.member.Member;
 
 import jakarta.transaction.Transactional;

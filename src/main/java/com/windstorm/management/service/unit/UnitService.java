@@ -2,8 +2,8 @@ package com.windstorm.management.service.unit;
 
 import org.springframework.stereotype.Service;
 
-import com.windstorm.management.controller.admin.unit.request.UnitCreate;
-import com.windstorm.management.controller.unit.response.UnitResponse;
+import com.windstorm.management.api.admin.unit.request.UnitCreate;
+import com.windstorm.management.api.user.unit.response.UnitResponse;
 import com.windstorm.management.domain.unit.Unit;
 import com.windstorm.management.implement.unit.UnitAppender;
 import com.windstorm.management.implement.unit.UnitReader;

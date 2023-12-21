@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.windstorm.management.controller.auth.request.Signup;
+import com.windstorm.management.api.user.auth.request.Signup;
 import com.windstorm.management.domain.member.Member;
 import com.windstorm.management.repository.member.MemberRepository;
 
