@@ -5,8 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.windstorm.management.controller.admin.member.request.MemberModify;
-import com.windstorm.management.controller.member.request.PasswordModify;
+import com.windstorm.management.api.admin.member.request.MemberModify;
+import com.windstorm.management.api.user.member.request.PasswordModify;
 import com.windstorm.management.domain.cell.Cell;
 import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.global.Gender;

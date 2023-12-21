@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.windstorm.management.controller.admin.member.request.MemberModify;
-import com.windstorm.management.controller.member.request.PasswordModify;
-import com.windstorm.management.controller.member.response.MemberResponse;
+import com.windstorm.management.api.admin.member.request.MemberModify;
+import com.windstorm.management.api.user.member.request.PasswordModify;
+import com.windstorm.management.api.user.member.response.MemberResponse;
 import com.windstorm.management.domain.member.Member;
 import com.windstorm.management.implement.member.MemberModifier;
 import com.windstorm.management.implement.member.MemberReader;

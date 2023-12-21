@@ -3,7 +3,7 @@ package com.windstorm.management.implement.unit;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.windstorm.management.controller.admin.unit.request.UnitCreate;
+import com.windstorm.management.api.admin.unit.request.UnitCreate;
 import com.windstorm.management.domain.unit.Unit;
 import com.windstorm.management.repository.unit.UnitRepository;
 

@@ -2,8 +2,8 @@ package com.windstorm.management.implement.cell;
 
 import org.springframework.stereotype.Component;
 
-import com.windstorm.management.controller.admin.cell.request.CellAddMember;
-import com.windstorm.management.controller.admin.cell.request.CellCreate;
+import com.windstorm.management.api.admin.cell.request.CellAddMember;
+import com.windstorm.management.api.admin.cell.request.CellCreate;
 import com.windstorm.management.domain.cell.Cell;
 import com.windstorm.management.domain.member.Member;
 import com.windstorm.management.domain.unit.Unit;

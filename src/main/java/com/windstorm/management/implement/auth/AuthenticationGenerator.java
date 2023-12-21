@@ -5,7 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.windstorm.management.controller.auth.request.Login;
+import com.windstorm.management.api.user.auth.request.Login;
 
 import lombok.RequiredArgsConstructor;
 
