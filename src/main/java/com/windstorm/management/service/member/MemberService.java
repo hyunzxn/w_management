@@ -19,6 +19,18 @@ public class MemberService {
 	private final MemberReader memberReader;
 	private final MemberModifier memberModifier;
 
+	/**
+	 * for Admin
+	 */
+	public MemberResponse modify(String uniqueId, MemberModify request) {
+		if (uniqueId.isEmpty()) {
+			throw new IllegalArgumentException("교적번호가 입력되지 않았습니다.");
+		}
+		Member member = memberReader.read(uniqueId);
+		memberModifier.modify(member, request);
+		return MemberResponse.toResponse(member);
+	}
+
 	public List<MemberResponse> get(String name) {
 		if (name.isEmpty()) {
 			throw new IllegalArgumentException("이름을 입력해주세요.");
@@ -32,14 +44,5 @@ public class MemberService {
 	public void modifyPassword(String uniqueId, PasswordModify request) {
 		Member member = memberReader.read(uniqueId);
 		memberModifier.modifyPassword(member, request);
-	}
-
-	public MemberResponse modify(String uniqueId, MemberModify request) {
-		if (uniqueId.isEmpty()) {
-			throw new IllegalArgumentException("교적번호가 입력되지 않았습니다.");
-		}
-		Member member = memberReader.read(uniqueId);
-		memberModifier.modify(member, request);
-		return MemberResponse.toResponse(member);
 	}
 }

@@ -17,11 +17,17 @@ public class CellService {
 	private final CellAppender cellAppender;
 	private final CellReader cellReader;
 
+	/**
+	 * for Admin
+	 */
 	public CellResponse append(CellCreate request) {
 		Cell newCell = cellAppender.append(request);
 		return CellResponse.toResponse(newCell);
 	}
 
+	/**
+	 * for Admin
+	 */
 	public void addMember(CellAddMember request) {
 		cellAppender.addMember(request);
 	}
