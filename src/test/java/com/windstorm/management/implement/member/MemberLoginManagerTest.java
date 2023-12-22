@@ -45,7 +45,7 @@ class MemberLoginManagerTest {
 
 	@Test
 	@DisplayName("로그인을 할 수 있다.")
-	void case1() {
+	void loginSuccess() {
 		// given
 		Login request = Login.builder()
 			.uniqueMemberId("1")
@@ -75,7 +75,7 @@ class MemberLoginManagerTest {
 
 	@Test
 	@DisplayName("비밀번호가 일치하지 않으면 로그인을 할 수 없다.")
-	void case2() {
+	void loginFail() {
 		// given
 		Login request = Login.builder()
 			.uniqueMemberId("1")

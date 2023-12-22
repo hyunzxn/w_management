@@ -33,7 +33,7 @@ class MemberAppenderTest {
 
 	@Test
 	@DisplayName("새로운 유저가 회원가입을 할 수 있다.")
-	void case1() {
+	void signUpSuccess() {
 		// given
 		Signup request = Signup.builder()
 			.uniqueMemberId("12345")
@@ -59,7 +59,7 @@ class MemberAppenderTest {
 
 	@Test
 	@DisplayName("이미 등록된 동일한 교적번호의 유저를 추가할 수 없다.")
-	void case2() {
+	void signUpFail() {
 		// given
 		Signup request = Signup.builder()
 			.uniqueMemberId("12345")
