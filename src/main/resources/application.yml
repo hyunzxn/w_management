@@ -24,8 +24,7 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-        show-sql: true
-        format-sql: true
+        format_sql: true
 ---
 # Test 환경
 spring:
