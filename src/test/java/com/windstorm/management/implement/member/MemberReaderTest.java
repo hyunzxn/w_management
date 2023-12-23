@@ -41,13 +41,11 @@ class MemberReaderTest {
 		Member result = memberReader.read(uniqueId);
 
 		// then
-		assertThat(result.getUniqueId()).isEqualTo("1");
-		assertThat(result.getName()).isEqualTo("김철수");
-		assertThat(result.getDivision()).isEqualTo(Division.DANIEL);
-		assertThat(result.getGender()).isEqualTo(Gender.MALE);
-		assertThat(result.getRole()).isEqualTo(LeaderRole.CAPTAIN);
-		assertThat(result.getPhoneNumber()).isEqualTo("010-1234-5678");
-		assertThat(result.getAddress()).isEqualTo("경기도 성남시");
+		assertThat(result)
+			.extracting("uniqueId", "name", "division", "gender", "role", "phoneNumber", "address")
+			.containsExactlyInAnyOrder(
+				"1", "김철수", Division.DANIEL, Gender.MALE, LeaderRole.CAPTAIN, "010-1234-5678", "경기도 성남시"
+			);
 	}
 
 	@Test
