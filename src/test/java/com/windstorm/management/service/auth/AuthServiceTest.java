@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.windstorm.management.api.user.auth.request.Login;
 import com.windstorm.management.api.user.auth.request.Signup;
+import com.windstorm.management.api.user.member.response.MemberResponse;
 import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.global.Gender;
 import com.windstorm.management.domain.global.LeaderRole;
@@ -27,10 +28,7 @@ import com.windstorm.management.repository.member.MemberRepository;
 @ActiveProfiles("test")
 class AuthServiceTest {
 	@Autowired
-	private MemberAppender memberAppender;
-
-	@Autowired
-	private MemberLoginManager memberLoginManager;
+	private AuthService authService;
 
 	@Autowired
 	private MemberRepository memberRepository;
@@ -59,12 +57,12 @@ class AuthServiceTest {
 			.build();
 
 		// when
-		Member result = memberAppender.append(request);
+		MemberResponse result = authService.create(request);
 
 		// then
-		assertThat(result.getUniqueId()).isEqualTo("1");
-		assertThat(result.getName()).isEqualTo("홍길동");
-		assertThat(result.getDivision()).isEqualTo(Division.DANIEL);
+		assertThat(result.uniqueMemberId()).isEqualTo("1");
+		assertThat(result.name()).isEqualTo("홍길동");
+		assertThat(result.division()).isEqualTo(Division.DANIEL);
 	}
 
 	@Test
@@ -86,7 +84,7 @@ class AuthServiceTest {
 			.build();
 
 		// when, then
-		assertThatThrownBy(() -> memberAppender.append(request))
+		assertThatThrownBy(() -> authService.create(request))
 			.isInstanceOf(RuntimeException.class)
 			.hasMessage("교적번호: " + request.uniqueMemberId() + "에 해당하는 데이터가 이미 존재합니다.");
 	}
@@ -105,7 +103,7 @@ class AuthServiceTest {
 			.build();
 
 		// when
-		JwtResponse result = memberLoginManager.login(request);
+		JwtResponse result = authService.login(request);
 
 		// then
 		assertThat(result.getGrantType()).isEqualTo("Bearer");
@@ -127,7 +125,7 @@ class AuthServiceTest {
 			.build();
 
 		// when, then
-		assertThatThrownBy(() -> memberLoginManager.login(request))
+		assertThatThrownBy(() -> authService.login(request))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("비밀번호가 일치하지 않습니다.");
 	}
