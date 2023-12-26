@@ -44,6 +44,7 @@ class CellServiceTest {
 	void cleanUp() {
 		cellRepository.deleteAll();
 		unitRepository.deleteAll();
+		memberRepository.deleteAll();
 	}
 
 	@Test
