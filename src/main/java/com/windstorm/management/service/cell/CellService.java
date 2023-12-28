@@ -7,6 +7,7 @@ import com.windstorm.management.api.admin.cell.request.CellCreate;
 import com.windstorm.management.api.user.cell.response.CellResponse;
 import com.windstorm.management.domain.cell.Cell;
 import com.windstorm.management.implement.cell.CellAppender;
+import com.windstorm.management.implement.cell.CellManager;
 import com.windstorm.management.implement.cell.CellReader;
 
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class CellService {
 	private final CellAppender cellAppender;
 	private final CellReader cellReader;
+	private final CellManager cellManager;
 
 	/**
 	 * for Admin
@@ -29,7 +31,7 @@ public class CellService {
 	 * for Admin
 	 */
 	public void addMember(CellAddMember request) {
-		cellAppender.addMember(request);
+		cellManager.addMember(request);
 	}
 
 	public CellResponse get(String name) {
