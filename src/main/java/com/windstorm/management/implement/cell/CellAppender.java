@@ -18,8 +18,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CellAppender {
 	private final CellRepository cellRepository;
-	private final MemberReader memberReader;
-	private final CellReader cellReader;
 	private final UnitReader unitReader;
 
 	@Transactional
@@ -28,13 +26,5 @@ public class CellAppender {
 		Cell newCell = Cell.create(request.name(), request.division());
 		newCell.defineUnit(unit);
 		return cellRepository.save(newCell);
-	}
-
-	@Transactional
-	public void addMember(CellAddMember request) {
-		Member member = memberReader.read(request.uniqueId());
-		Cell cell = cellReader.read(request.cellName());
-
-		cell.addMember(member);
 	}
 }
