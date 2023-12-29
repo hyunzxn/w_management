@@ -3,6 +3,7 @@ package com.windstorm.management.domain.cell;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.windstorm.management.domain.BaseTimeEntity;
 import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.member.Member;
 import com.windstorm.management.domain.unit.Unit;
@@ -25,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Cell {
+public class Cell extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
