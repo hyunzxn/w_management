@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.windstorm.management.api.admin.member.request.MemberModify;
 import com.windstorm.management.api.user.member.request.PasswordModify;
+import com.windstorm.management.domain.BaseTimeEntity;
 import com.windstorm.management.domain.cell.Cell;
 import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.global.Gender;
@@ -29,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseTimeEntity {
 
 	private static final int ORIGIN_YEAR = 1972;
 
