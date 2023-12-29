@@ -1,5 +1,7 @@
 package com.windstorm.management.api.user.cell.response;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,6 +14,9 @@ import lombok.Builder;
 
 @Builder
 public record CellResponse(
+	Long id,
+	LocalDateTime createdAt,
+	LocalDateTime modifiedAt,
 	String name,
 	List<MemberResponse> members
 ) {
@@ -24,6 +29,9 @@ public record CellResponse(
 		setCaptainFirstInList(members);
 
 		return CellResponse.builder()
+			.id(cell.getId())
+			.createdAt(cell.getCreatedAt())
+			.modifiedAt(cell.getModifiedAt())
 			.name(cell.getName())
 			.members(members)
 			.build();

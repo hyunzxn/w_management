@@ -1,5 +1,6 @@
 package com.windstorm.management.api.user.unit.response;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.windstorm.management.api.user.cell.response.CellResponse;
@@ -10,6 +11,9 @@ import lombok.Builder;
 
 @Builder
 public record UnitResponse(
+	Long id,
+	LocalDateTime createdAt,
+	LocalDateTime modifiedAt,
 	Division division,
 	String name,
 	String managerName,
@@ -22,6 +26,9 @@ public record UnitResponse(
 			.toList();
 
 		return UnitResponse.builder()
+			.id(unit.getId())
+			.createdAt(unit.getCreatedAt())
+			.modifiedAt(unit.getModifiedAt())
 			.division(unit.getDivision())
 			.name(unit.getName())
 			.managerName(unit.getName().substring(0, 3))

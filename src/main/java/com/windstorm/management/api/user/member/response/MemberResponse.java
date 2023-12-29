@@ -1,6 +1,7 @@
 package com.windstorm.management.api.user.member.response;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.global.Gender;
@@ -12,6 +13,8 @@ import lombok.Builder;
 @Builder
 public record MemberResponse(
 	Long id,
+	LocalDateTime createdAt,
+	LocalDateTime modifiedAt,
 	String uniqueMemberId,
 	String name,
 	String cellName,
@@ -27,6 +30,8 @@ public record MemberResponse(
 	public static MemberResponse toResponse(Member member) {
 		return MemberResponse.builder()
 			.id(member.getId())
+			.createdAt(member.getCreatedAt())
+			.modifiedAt(member.getModifiedAt())
 			.uniqueMemberId(member.getUniqueId())
 			.name(member.getName())
 			.cellName(member.getCell() == null ? "새가족" : member.getCell().getName())
