@@ -1,6 +1,7 @@
 package com.windstorm.management.api.user.cellmemo;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class CellMemoController {
 	private final CellMemoService cellMemoService;
 
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping()
 	public ApiResponse<String> append(@Valid @RequestBody CellMemoCreate request) {
 		cellMemoService.append(request);
