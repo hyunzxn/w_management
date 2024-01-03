@@ -1,6 +1,7 @@
 package com.windstorm.management.api;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -51,6 +52,20 @@ public class ApiControllerAdvice {
 		return ApiResponse.of(
 			HttpStatus.BAD_REQUEST,
 			e.getMessage(),
+			null
+		);
+	}
+
+	/**
+	 * 클라이언트에서 LocalDate 타입에 밎지 않는 형식으로 날짜 값을 보내는 경우에 발생하는 JSON Parsing 에러를 컨트롤
+	 */
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ApiResponse<Object> httpMessageNotReadableException(HttpMessageNotReadableException e) {
+		log.error(e.getMessage(), e);
+		return ApiResponse.of(
+			HttpStatus.BAD_REQUEST,
+			"날짜 형식이 yyyy-MM-dd 형태가 아닙니다.",
 			null
 		);
 	}
