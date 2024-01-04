@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.windstorm.management.api.admin.member.request.MemberModify;
 import com.windstorm.management.api.user.member.request.PasswordModify;
+import com.windstorm.management.domain.cell.Cell;
 import com.windstorm.management.domain.member.Member;
 
 import jakarta.transaction.Transactional;
@@ -24,5 +25,10 @@ public class MemberModifier {
 	@Transactional
 	public void modify(Member member, MemberModify request) {
 		member.modify(request);
+	}
+
+	@Transactional
+	public void modifyCell(Member member, Cell newCell) {
+		member.defineCell(newCell);
 	}
 }
