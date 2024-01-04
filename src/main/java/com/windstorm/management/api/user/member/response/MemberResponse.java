@@ -17,6 +17,7 @@ public record MemberResponse(
 	LocalDateTime modifiedAt,
 	String uniqueMemberId,
 	String name,
+	String unitName,
 	String cellName,
 	LocalDate birthDate,
 	int ageGroup,
@@ -34,6 +35,7 @@ public record MemberResponse(
 			.modifiedAt(member.getModifiedAt())
 			.uniqueMemberId(member.getUniqueId())
 			.name(member.getName())
+			.unitName(member.getCell() == null ? "새가족" : member.getCell().getUnit().getName())
 			.cellName(member.getCell() == null ? "새가족" : member.getCell().getName())
 			.birthDate(member.getBirthDate())
 			.ageGroup(member.calculateAgeGroup(member.getBirthDate()))
