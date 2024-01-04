@@ -14,8 +14,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.windstorm.management.api.admin.member.request.MemberCellModify;
 import com.windstorm.management.api.admin.member.request.MemberModify;
 import com.windstorm.management.api.user.member.request.PasswordModify;
+import com.windstorm.management.domain.cell.Cell;
 import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.global.Gender;
 import com.windstorm.management.domain.global.LeaderRole;
@@ -74,6 +76,22 @@ class MemberModifierTest {
 		assertThat(member.getAddress()).isEqualTo("경기도 용인시");
 	}
 
+	@Test
+	@DisplayName("청년이 속한 셀을 변경할 수 있다.")
+	void modifyCell() {
+		// given
+		Member member = createMember();
+		member.defineCell(Cell.create("민수셀", Division.DANIEL));
+
+		Cell newCell = createCell();
+
+		// when
+		memberModifier.modifyCell(member, newCell);
+
+		// then
+		assertThat(member.getCell().getName()).isEqualTo("짱구셀");
+	}
+
 	private Member createMember() {
 		return Member.create(
 			"1",
@@ -85,6 +103,13 @@ class MemberModifierTest {
 			LeaderRole.CAPTAIN,
 			"010-1234-5678",
 			"경기도 성남시"
+		);
+	}
+
+	private Cell createCell() {
+		return Cell.create(
+			"짱구셀",
+			Division.DANIEL
 		);
 	}
 }

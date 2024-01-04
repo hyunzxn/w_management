@@ -14,15 +14,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.windstorm.management.api.admin.member.request.MemberCellModify;
 import com.windstorm.management.api.admin.member.request.MemberModify;
 import com.windstorm.management.api.user.member.request.PasswordModify;
 import com.windstorm.management.api.user.member.response.MemberResponse;
+import com.windstorm.management.domain.cell.Cell;
 import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.global.Gender;
 import com.windstorm.management.domain.global.LeaderRole;
 import com.windstorm.management.domain.member.Member;
 import com.windstorm.management.implement.member.MemberModifier;
 import com.windstorm.management.implement.member.MemberReader;
+import com.windstorm.management.repository.cell.CellRepository;
 import com.windstorm.management.repository.member.MemberRepository;
 
 @SpringBootTest
@@ -34,9 +37,13 @@ class MemberServiceTest {
 	@Autowired
 	private MemberRepository memberRepository;
 
+	@Autowired
+	private CellRepository cellRepository;
+
 	@AfterEach
 	void cleanUp() {
 		memberRepository.deleteAll();
+		cellRepository.deleteAll();
 	}
 
 	@Test
@@ -59,7 +66,7 @@ class MemberServiceTest {
 			.build();
 
 		// when
-		MemberResponse result = memberService.modify(uniqueId, request);
+		MemberResponse result = memberService.modify(request);
 
 		// then
 		assertThat(result)
@@ -67,31 +74,6 @@ class MemberServiceTest {
 			.containsExactlyInAnyOrder(
 				"김민수", LocalDate.of(2000, 11, 30), Division.JOSEPH1, LeaderRole.MANAGER, "010-2222-3333", "서울특별시 강남구"
 			);
-	}
-
-	@Test
-	@DisplayName("클라이언트 측에서 사용자의 교적번호를 제대로 넘기지 않으면 사용자의 정보를 수정할 수 없다.")
-	void modifyAllInfoFail1() {
-		// given
-		Member member = createMember();
-		memberRepository.save(member);
-
-		String uniqueId = "";
-		MemberModify request = MemberModify.builder()
-			.uniqueId("1")
-			.name("김민수")
-			.birthDate(LocalDate.of(2000, 11, 30))
-			.division(Division.JOSEPH1)
-			.gender(Gender.MALE)
-			.role(LeaderRole.MANAGER)
-			.phoneNumber("010-2222-3333")
-			.address("서울특별시 강남구")
-			.build();
-
-		// when, then
-		assertThatThrownBy(() -> memberService.modify(uniqueId, request))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("교적번호가 입력되지 않았습니다.");
 	}
 
 	@Test
@@ -114,7 +96,7 @@ class MemberServiceTest {
 			.build();
 
 		// when, then
-		assertThatThrownBy(() -> memberService.modify(uniqueId, request))
+		assertThatThrownBy(() -> memberService.modify(request))
 			.isInstanceOf(RuntimeException.class)
 			.hasMessage("교적번호: " + uniqueId + "에 해당하는 데이터가 존재하지 않습니다.");
 	}
@@ -174,6 +156,33 @@ class MemberServiceTest {
 
 		// then
 		assertThat(member.getPassword()).isNotEqualTo("saeeden1234!!");
+	}
+
+	@Test
+	@DisplayName("청년이 소속된 셀을 변경할 수 있다.")
+	@Transactional
+	void modifyCell() {
+		// given
+		List<Cell> cells = List.of(
+			Cell.create("민수셀", Division.DANIEL),
+			Cell.create("짱구셀", Division.DANIEL)
+		);
+		cellRepository.saveAll(cells);
+
+		Member member = createMember();
+		member.defineCell(cells.get(0));
+		memberRepository.save(member);
+
+		MemberCellModify request = MemberCellModify.builder()
+			.uniqueId("1")
+			.cellName("짱구셀")
+			.build();
+
+		// when
+		memberService.modifyCell(request);
+
+		// then
+		assertThat(member.getCell().getName()).isEqualTo("짱구셀");
 	}
 
 	private Member createMember() {
