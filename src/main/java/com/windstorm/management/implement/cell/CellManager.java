@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.windstorm.management.api.admin.cell.request.CellAddMember;
 import com.windstorm.management.domain.cell.Cell;
 import com.windstorm.management.domain.member.Member;
+import com.windstorm.management.domain.unit.Unit;
 import com.windstorm.management.implement.member.MemberReader;
 
 import jakarta.transaction.Transactional;
@@ -22,5 +23,10 @@ public class CellManager {
 		Cell cell = cellReader.read(request.cellName());
 
 		cell.addMember(member);
+	}
+
+	@Transactional
+	public void modify(Cell cell, Unit newUnit) {
+		cell.defineUnit(newUnit);
 	}
 }
