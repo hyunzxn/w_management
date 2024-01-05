@@ -19,6 +19,7 @@ import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.global.Gender;
 import com.windstorm.management.domain.global.LeaderRole;
 import com.windstorm.management.domain.member.Member;
+import com.windstorm.management.domain.unit.Unit;
 import com.windstorm.management.implement.member.MemberReader;
 
 @ExtendWith(MockitoExtension.class)
@@ -95,6 +96,22 @@ class CellManagerTest {
 		assertThatThrownBy(() -> cellManager.addMember(request))
 			.isInstanceOf(RuntimeException.class)
 			.hasMessage(cellName + "에 해당하는 셀이 존재하지 않습니다.");
+	}
+
+	@Test
+	@DisplayName("셀이 소속된 진을 변경할 수 있다.")
+	void modifyUnit() {
+		// given
+		Cell cell = createCell();
+		cell.defineUnit(Unit.create(Division.DANIEL, "김짱구진"));
+
+		Unit newUnit = Unit.create(Division.DANIEL, "박철수진");
+
+		// when
+		cellManager.modify(cell, newUnit);
+
+		// then
+		assertThat(cell.getUnit().getName()).isEqualTo("박철수진");
 	}
 
 	private Member createMember() {

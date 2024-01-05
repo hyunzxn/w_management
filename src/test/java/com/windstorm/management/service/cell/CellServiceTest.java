@@ -3,6 +3,7 @@ package com.windstorm.management.service.cell;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.windstorm.management.api.admin.cell.request.CellAddMember;
 import com.windstorm.management.api.admin.cell.request.CellCreate;
+import com.windstorm.management.api.admin.cell.request.UnitModify;
 import com.windstorm.management.api.user.cell.response.CellResponse;
 import com.windstorm.management.domain.cell.Cell;
 import com.windstorm.management.domain.global.Division;
@@ -191,6 +193,33 @@ class CellServiceTest {
 		assertThatThrownBy(() -> cellService.get(name))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("셀 이름이 입력되지 않았습니다.");
+	}
+
+	@Test
+	@DisplayName("셀이 소속된 진을 변경할 수 있다.")
+	@Transactional
+	void modifyUnit() {
+		// given
+		List<Unit> units = List.of(
+			Unit.create(Division.DANIEL, "박짱구진"),
+			Unit.create(Division.DANIEL, "김철수진")
+		);
+		unitRepository.saveAll(units);
+
+		Cell cell = createCell();
+		cell.defineUnit(units.get(0));
+		cellRepository.save(cell);
+
+		UnitModify request = UnitModify.builder()
+			.cellName("홍길동셀")
+			.unitName("김철수진")
+			.build();
+
+		// when
+		cellService.modifyUnit(request);
+
+		// then
+		assertThat(cell.getUnit().getName()).isEqualTo("김철수진");
 	}
 
 	private Unit createUnit() {
