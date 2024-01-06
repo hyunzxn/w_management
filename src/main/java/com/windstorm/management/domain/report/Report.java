@@ -76,4 +76,8 @@ public class Report extends BaseTimeEntity {
 			.member(member)
 			.build();
 	}
+
+	public void updateIsReadState() {
+		this.isRead = true;
+	}
 }
