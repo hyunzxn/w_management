@@ -15,6 +15,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.windstorm.management.api.user.report.request.ReportCreate;
 import com.windstorm.management.api.user.report.response.ReportResponse;
@@ -116,6 +117,32 @@ class ReportServiceTest {
 
 		// then
 		assertThat(result).hasSize(expected);
+	}
+
+	@Test
+	@DisplayName("사역자 읽은 심방 보고서의 조회 여부가 true로 업데이트 된다.")
+	@Transactional
+	void getReport() {
+		// given
+		Member member = createMember();
+		memberRepository.save(member);
+
+		Report report = createReport(
+			LocalDate.of(2024, 1, 6),
+			"서인국",
+			"심방 내용입니다.",
+			Division.DANIEL,
+			"특이사항입니다.",
+			"기도제목 입니다.",
+			member
+		);
+		reportRepository.save(report);
+
+		// when
+		reportService.getReport(report.getId());
+
+		// then
+		assertThat(report.isRead()).isTrue();
 	}
 
 	private Member createMember() {

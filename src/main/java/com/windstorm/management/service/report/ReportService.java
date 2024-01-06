@@ -8,8 +8,10 @@ import com.windstorm.management.api.user.report.request.ReportCreate;
 import com.windstorm.management.api.user.report.response.ReportResponse;
 import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.member.Member;
+import com.windstorm.management.domain.report.Report;
 import com.windstorm.management.implement.member.MemberReader;
 import com.windstorm.management.implement.report.ReportAppender;
+import com.windstorm.management.implement.report.ReportModifier;
 import com.windstorm.management.implement.report.ReportReader;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class ReportService {
 	private final ReportAppender reportAppender;
 	private final ReportReader reportReader;
+	private final ReportModifier reportModifier;
 	private final MemberReader memberReader;
 
 	public void append(String uniqueId, ReportCreate request) {
@@ -28,5 +31,11 @@ public class ReportService {
 
 	public List<ReportResponse> getUnReadAllReports(Division division) {
 		return reportReader.getUnReadAllReports(division);
+	}
+
+	public ReportResponse getReport(Long id) {
+		Report report = reportReader.read(id);
+		reportModifier.updateIsReadState(report);
+		return ReportResponse.toResponse(report);
 	}
 }

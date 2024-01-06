@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.windstorm.management.api.ApiResponse;
@@ -30,5 +31,11 @@ public class AdminReportController {
 	) {
 		Division division = loginUser.getDivision();
 		return ApiResponse.of(HttpStatus.OK, "심방 보고서 조회 성공", reportService.getUnReadAllReports(division));
+	}
+
+	@PreAuthorize("isAuthenticated() && hasAnyRole('PASTOR')")
+	@GetMapping("/read")
+	public ApiResponse<ReportResponse> getReport(@RequestParam Long id) {
+		return ApiResponse.of(HttpStatus.OK, "심방 보고서 읽기 성공", reportService.getReport(id));
 	}
 }
