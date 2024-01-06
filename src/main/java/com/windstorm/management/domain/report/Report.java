@@ -45,6 +45,8 @@ public class Report extends BaseTimeEntity {
 	@Lob
 	private String targetPrayRequest;
 
+	private boolean isRead;
+
 	@ManyToOne
 	@JoinColumn(name = "member_id")
 	private Member member;
@@ -59,6 +61,7 @@ public class Report extends BaseTimeEntity {
 		this.specialNote = specialNote;
 		this.targetPrayRequest = targetPrayRequest;
 		this.member = member;
+		this.isRead = false;
 	}
 
 	public static Report create(LocalDate date, String targetName, String content, Division division, String specialNote,
