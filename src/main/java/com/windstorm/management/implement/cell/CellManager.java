@@ -20,7 +20,7 @@ public class CellManager {
 	@Transactional
 	public void addMember(CellAddMember request) {
 		Member member = memberReader.read(request.uniqueId());
-		Cell cell = cellReader.read(request.cellName());
+		Cell cell = cellReader.read(request.cellName(), request.division());
 
 		cell.addMember(member);
 	}
