@@ -14,7 +14,7 @@ public record CellAddMember(
 	@NotNull(message = "청년부를 입력해주세요.")
 	Division division,
 
-	@NotBlank(message = "셀원 교적번호를 입력해주세요.")
+	@NotBlank(message = "새롭게 추가할 청년의 교적번호를 입력해주세요.")
 	String uniqueId
 ) {
 }
