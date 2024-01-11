@@ -99,6 +99,7 @@ class CellServiceTest {
 		CellAddMember request = CellAddMember.builder()
 			.cellName("홍길동셀")
 			.uniqueId("1")
+			.division(Division.DANIEL)
 			.build();
 
 		// when
