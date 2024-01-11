@@ -37,7 +37,7 @@ public class MemberService {
 	 */
 	public void modifyCell(MemberCellModify request) {
 		Member member = memberReader.read(request.uniqueId());
-		Cell newCell = cellReader.read(request.cellName());
+		Cell newCell = cellReader.readWithDivision(request.cellName(), request.division());
 		memberModifier.modifyCell(member, newCell);
 	}
 
