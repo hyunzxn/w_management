@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class CellMemoController {
 	private final CellMemoService cellMemoService;
 
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated() && hasAnyRole('CAPTAIN')")
 	@PostMapping()
 	public ApiResponse<String> append(@Valid @RequestBody CellMemoCreate request) {
 		cellMemoService.append(request);
