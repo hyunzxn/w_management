@@ -40,13 +40,14 @@ class CellManagerTest {
 		CellAddMember request = CellAddMember.builder()
 			.uniqueId("1")
 			.cellName("홍길동셀")
+			.division(Division.DANIEL)
 			.build();
 
 		Member member = createMember();
 		Cell cell = createCell();
 
 		when(memberReader.read(any(String.class))).thenReturn(member);
-		when(cellReader.read(any(String.class))).thenReturn(cell);
+		when(cellReader.readWithDivision(any(String.class), any(Division.class))).thenReturn(cell);
 
 		// when
 		cellManager.addMember(request);
@@ -88,9 +89,10 @@ class CellManagerTest {
 		CellAddMember request = CellAddMember.builder()
 			.uniqueId("1")
 			.cellName("홍길동셀")
+			.division(Division.DANIEL)
 			.build();
 
-		when(cellReader.read(any(String.class))).thenThrow(new RuntimeException(cellName + "에 해당하는 셀이 존재하지 않습니다."));
+		when(cellReader.readWithDivision(any(String.class), any(Division.class))).thenThrow(new RuntimeException(cellName + "에 해당하는 셀이 존재하지 않습니다."));
 
 		// when, then
 		assertThatThrownBy(() -> cellManager.addMember(request))

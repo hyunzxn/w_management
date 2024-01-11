@@ -176,6 +176,7 @@ class MemberServiceTest {
 		MemberCellModify request = MemberCellModify.builder()
 			.uniqueId("1")
 			.cellName("짱구셀")
+			.division(Division.DANIEL)
 			.build();
 
 		// when
