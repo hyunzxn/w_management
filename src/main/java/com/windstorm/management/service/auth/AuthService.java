@@ -27,4 +27,8 @@ public class AuthService {
 	public JwtResponse login(Login request) {
 		return loginManager.login(request);
 	}
+
+	public void logout(String accessToken) {
+		loginManager.logout(accessToken);
+	}
 }

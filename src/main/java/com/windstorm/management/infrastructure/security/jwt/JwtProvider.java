@@ -1,6 +1,9 @@
 package com.windstorm.management.infrastructure.security.jwt;
 
 import java.security.Key;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -14,6 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.windstorm.management.infrastructure.redis.RedisUtils;
 import com.windstorm.management.infrastructure.security.CustomUserDetailsService;
 
 import io.jsonwebtoken.Claims;
@@ -24,6 +28,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -32,12 +37,14 @@ public class JwtProvider {
 
 	private final Key key;
 	private final CustomUserDetailsService userDetailsService;
+	private final RedisUtils redisUtils;
 
 	public JwtProvider(@Value("${jwt.secret}") String secretKey,
-		CustomUserDetailsService userDetailsService) {
+		CustomUserDetailsService userDetailsService, RedisUtils redisUtils) {
 		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
 		this.key = Keys.hmacShaKeyFor(keyBytes);
 		this.userDetailsService = userDetailsService;
+		this.redisUtils = redisUtils;
 	}
 
 	public JwtResponse generateToken(Authentication authentication) {
@@ -48,7 +55,7 @@ public class JwtProvider {
 		long now = (new Date()).getTime();
 
 		//AccessToken
-		Date accessTokenExpiresIn = new Date(now + 86400000);
+		Date accessTokenExpiresIn = new Date(now + 3600000);
 		String accessToken = Jwts.builder()
 			.setSubject(authentication.getName())
 			.claim("auth", authorities)
@@ -94,6 +101,9 @@ public class JwtProvider {
 				.setSigningKey(key)
 				.build()
 				.parseClaimsJws(token);
+			if (redisUtils.hasKeyBlackList(token)) {
+				throw new RuntimeException("로그아웃 된 토큰입니다.");
+			}
 			return true;
 		} catch (SecurityException | MalformedJwtException e) {
 			log.info("Invalid JWT Token", e);
@@ -105,6 +115,23 @@ public class JwtProvider {
 			log.info("JWT claims string is empty.", e);
 		}
 		return false;
+	}
+
+	public int getRemainingTokenExpireTime(String token) {
+		Claims claims = parseClaims(token);
+		Date expiration = claims.getExpiration();
+
+		// Date를 LocalDateTime으로 변환
+		LocalDateTime expirationDateTime = expiration.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+		// 현재 시간
+		LocalDateTime currentDateTime = LocalDateTime.now();
+
+		// Duration으로 시간 차이 계산
+		Duration duration = Duration.between(currentDateTime, expirationDateTime);
+
+		// Duration을 초로 변환하여 반환
+		return (int) duration.getSeconds();
 	}
 
 	// accessToken
