@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.member.Member;
 import com.windstorm.management.repository.member.MemberRepository;
 
@@ -27,5 +28,9 @@ public class MemberReader {
 			throw new RuntimeException(name + "에 해당하는 데이터가 존재하지 않습니다.");
 		}
 		return members;
+	}
+
+	public Member findDivisionPastor(Division division) {
+		return memberRepository.findDivisionPastor(division);
 	}
 }
