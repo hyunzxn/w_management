@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.windstorm.management.api.admin.notification.response.NotificationResponse;
 import com.windstorm.management.domain.global.Division;
@@ -65,6 +66,24 @@ class NotificationServiceTest {
 		// then
 		assertThat(result1).hasSize(3);
 		assertThat(result2).hasSize(0);
+	}
+
+	@Test
+	@DisplayName("알림의 읽음 상태가 false에서 true로 업데이트 된다.")
+	@Transactional
+	void updateNotificationIsRead() {
+		// given
+		Member pastor = createMember("1", "이준영", Division.DANIEL);
+		memberRepository.save(pastor);
+
+		Notification notification = createNotification("알림 내용입니다.", pastor);
+		notificationRepository.save(notification);
+
+		// when
+		notificationService.updateNotificationIsRead(notification.getId());
+
+		// then
+		assertThat(notification.isRead()).isTrue();
 	}
 
 	private Member createMember(String uniqueId, String name, Division division) {
