@@ -6,16 +6,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.windstorm.management.domain.notification.Notification;
 
 @ExtendWith(MockitoExtension.class)
 class NotificationModifierTest {
-	@Mock
-	private NotificationReader notificationReader;
-
 	@InjectMocks
 	private NotificationModifier notificationModifier;
 
@@ -26,13 +22,10 @@ class NotificationModifierTest {
 		Long id = 1L;
 		Notification notification = mock(Notification.class);
 
-		when(notificationReader.read(any(Long.class))).thenReturn(notification);
-
 		// when
-		notificationModifier.updateIsRead(id);
+		notificationModifier.updateIsRead(notification);
 
 		// then
-		verify(notificationReader, times(1)).read(any(Long.class));
 		verify(notification, times(1)).updateIsRead();
 	}
 }

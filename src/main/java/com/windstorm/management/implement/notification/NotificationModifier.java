@@ -13,8 +13,7 @@ public class NotificationModifier {
 	private final NotificationReader notificationReader;
 
 	@Transactional
-	public void updateIsRead(Long id) {
-		Notification notification = notificationReader.read(id);
+	public void updateIsRead(Notification notification) {
 		notification.updateIsRead();
 	}
 }
