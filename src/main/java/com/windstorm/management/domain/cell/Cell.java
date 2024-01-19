@@ -38,7 +38,7 @@ public class Cell extends BaseTimeEntity {
 	private Division division;
 
 	@OneToMany(mappedBy = "cell", cascade = CascadeType.ALL)
-	private List<Member> members = new ArrayList<>();
+	private final List<Member> members = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "unit_id")

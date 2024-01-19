@@ -64,7 +64,8 @@ public class Report extends BaseTimeEntity {
 		this.isRead = false;
 	}
 
-	public static Report create(LocalDate date, String targetName, String content, Division division, String specialNote,
+	public static Report create(LocalDate date, String targetName, String content, Division division,
+		String specialNote,
 		String targetPrayRequest, Member member) {
 		return Report.builder()
 			.date(date)

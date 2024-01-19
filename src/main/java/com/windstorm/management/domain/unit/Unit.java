@@ -35,7 +35,7 @@ public class Unit extends BaseTimeEntity {
 	private String name;
 
 	@OneToMany(mappedBy = "unit", cascade = CascadeType.ALL)
-	private List<Cell> cells = new ArrayList<>();
+	private final List<Cell> cells = new ArrayList<>();
 
 	@Builder
 	private Unit(Division division, String name) {

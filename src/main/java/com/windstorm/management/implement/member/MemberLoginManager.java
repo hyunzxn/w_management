@@ -1,8 +1,5 @@
 package com.windstorm.management.implement.member;
 
-import java.util.concurrent.TimeUnit;
-
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

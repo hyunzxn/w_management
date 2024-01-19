@@ -28,7 +28,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -131,7 +130,7 @@ public class JwtProvider {
 		Duration duration = Duration.between(currentDateTime, expirationDateTime);
 
 		// Duration을 초로 변환하여 반환
-		return (int) duration.getSeconds();
+		return (int)duration.getSeconds();
 	}
 
 	// accessToken

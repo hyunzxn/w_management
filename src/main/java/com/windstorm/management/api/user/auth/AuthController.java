@@ -1,8 +1,6 @@
 package com.windstorm.management.api.user.auth;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -13,7 +11,6 @@ import com.windstorm.management.api.ApiResponse;
 import com.windstorm.management.api.user.auth.request.Login;
 import com.windstorm.management.api.user.auth.request.Signup;
 import com.windstorm.management.api.user.member.response.MemberResponse;
-import com.windstorm.management.infrastructure.security.UserPrincipal;
 import com.windstorm.management.infrastructure.security.jwt.JwtResponse;
 import com.windstorm.management.service.auth.AuthService;
 
