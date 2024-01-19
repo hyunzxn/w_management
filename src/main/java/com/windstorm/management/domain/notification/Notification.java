@@ -44,4 +44,8 @@ public class Notification extends BaseTimeEntity {
 			.member(member)
 			.build();
 	}
+
+	public void updateIsRead() {
+		this.isRead = true;
+	}
 }

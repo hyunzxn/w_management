@@ -16,6 +16,11 @@ import lombok.RequiredArgsConstructor;
 public class NotificationReader {
 	private final NotificationRepository notificationRepository;
 
+	public Notification read(Long id) {
+		return notificationRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException(id + "에 해당하는 알림이 존재하지 않습니다."));
+	}
+
 	public List<Notification> readBy(Long id) {
 		return notificationRepository.findNotificationsByPastor(id);
 	}
