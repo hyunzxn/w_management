@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/notifications")
+@RequestMapping("/api/admin/notifications")
 public class AdminNotificationController {
 	private final NotificationService notificationService;
 
@@ -38,5 +39,12 @@ public class AdminNotificationController {
 	public ApiResponse<Object> updateNotificationIsRead(@PathVariable Long id) {
 		notificationService.updateNotificationIsRead(id);
 		return ApiResponse.of(HttpStatus.OK, "미확인 알림 조회 상태 업데이트 성공", null);
+	}
+
+	@PreAuthorize("isAuthenticated() && hasAnyRole('PASTOR')")
+	@DeleteMapping("/{id}")
+	public ApiResponse<Object> deleteNotification(@PathVariable Long id) {
+		notificationService.delete(id);
+		return ApiResponse.of(HttpStatus.OK, "알림 삭제 성공", null);
 	}
 }
