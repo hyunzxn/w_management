@@ -10,6 +10,7 @@ import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.member.Member;
 import com.windstorm.management.domain.report.Report;
 import com.windstorm.management.implement.member.MemberReader;
+import com.windstorm.management.implement.notification.NotificationAppender;
 import com.windstorm.management.implement.report.ReportAppender;
 import com.windstorm.management.implement.report.ReportModifier;
 import com.windstorm.management.implement.report.ReportReader;
@@ -23,10 +24,12 @@ public class ReportService {
 	private final ReportReader reportReader;
 	private final ReportModifier reportModifier;
 	private final MemberReader memberReader;
+	private final NotificationAppender notificationAppender;
 
 	public void append(String uniqueId, ReportCreate request) {
 		Member member = memberReader.read(uniqueId);
 		reportAppender.append(member, request);
+		notificationAppender.append(member.getName(), request.division());
 	}
 
 	public List<ReportResponse> getUnReadAllReports(Division division) {

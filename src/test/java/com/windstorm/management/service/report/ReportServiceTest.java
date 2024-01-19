@@ -23,8 +23,10 @@ import com.windstorm.management.domain.global.Division;
 import com.windstorm.management.domain.global.Gender;
 import com.windstorm.management.domain.global.LeaderRole;
 import com.windstorm.management.domain.member.Member;
+import com.windstorm.management.domain.notification.Notification;
 import com.windstorm.management.domain.report.Report;
 import com.windstorm.management.repository.member.MemberRepository;
+import com.windstorm.management.repository.notification.NotificationRepository;
 import com.windstorm.management.repository.report.ReportRepository;
 
 @SpringBootTest
@@ -37,10 +39,14 @@ class ReportServiceTest {
 	private ReportRepository reportRepository;
 
 	@Autowired
+	private NotificationRepository notificationRepository;
+
+	@Autowired
 	private ReportService reportService;
 
 	@AfterEach
 	void cleanUp() {
+		notificationRepository.deleteAll();
 		reportRepository.deleteAll();
 		memberRepository.deleteAll();
 	}
@@ -55,7 +61,7 @@ class ReportServiceTest {
 		String uniqueId = member.getUniqueId();
 		ReportCreate request = ReportCreate.builder()
 			.date(LocalDate.of(2024, 1, 6))
-			.targetName("김철수")
+			.targetName("이민지")
 			.content("심방 내용")
 			.division(Division.DANIEL)
 			.specialNote("특이사항")
@@ -67,6 +73,44 @@ class ReportServiceTest {
 
 		// then
 		assertThat(reportRepository.findAll().isEmpty()).isFalse();
+	}
+
+	@Test
+	@DisplayName("심방 보고서를 작성하면 담당 사역자에게 알림이 추가된다.")
+	void checkPastorNotification() {
+		// given
+		Member member = createMember();
+		Member pastor = Member.create(
+			"2",
+			"이준영",
+			"1234qwer!!",
+			LocalDate.of(1988, 4, 22),
+			Division.DANIEL,
+			Gender.MALE,
+			LeaderRole.PASTOR,
+			"010-5678-1234",
+			"경기도 용인시"
+		);
+		memberRepository.save(member);
+		memberRepository.save(pastor);
+
+		String uniqueId = member.getUniqueId();
+		ReportCreate request = ReportCreate.builder()
+			.date(LocalDate.of(2024, 1, 6))
+			.targetName("이민지")
+			.content("심방 내용")
+			.division(Division.DANIEL)
+			.specialNote("특이사항")
+			.targetPrayRequest("기도제목")
+			.build();
+
+		// when
+		reportService.append(uniqueId, request);
+
+		// then
+		Notification notification = notificationRepository.findAll().get(0);
+		assertThat(notification.getMember().getDivision()).isEqualTo(Division.DANIEL);
+		assertThat(notification.getMember().getName()).isEqualTo("이준영");
 	}
 
 	@ParameterizedTest
