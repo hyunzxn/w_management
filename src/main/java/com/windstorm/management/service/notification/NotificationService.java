@@ -39,4 +39,13 @@ public class NotificationService {
 		Notification notification = notificationReader.read(id);
 		notificationRemover.delete(notification);
 	}
+
+	/**
+	 * @return true: 알림이 존재한다, false: 알림이 존재하지 않는다.
+	 */
+	public Boolean checkUnreadNotificationIsPresent(String uniqueId) {
+		Member pastor = memberReader.read(uniqueId);
+		List<Notification> notifications = notificationReader.readBy(pastor.getId());
+		return !notifications.isEmpty();
+	}
 }

@@ -47,4 +47,14 @@ public class AdminNotificationController {
 		notificationService.delete(id);
 		return ApiResponse.of(HttpStatus.OK, "알림 삭제 성공", null);
 	}
+
+	@PreAuthorize("isAuthenticated() && hasAnyRole('PASTOR')")
+	@GetMapping("/check")
+	public ApiResponse<Boolean> checkUnreadNotificationIsPresent(
+		@AuthenticationPrincipal UserPrincipal userPrincipal
+	) {
+		String loginUserUniqueId = userPrincipal.getUniqueId();
+		return ApiResponse.of(HttpStatus.OK, "미확인 알림 존재 여부 확인 성공",
+			notificationService.checkUnreadNotificationIsPresent(loginUserUniqueId));
+	}
 }

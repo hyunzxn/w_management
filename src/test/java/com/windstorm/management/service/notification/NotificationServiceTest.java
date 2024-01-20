@@ -86,6 +86,29 @@ class NotificationServiceTest {
 		assertThat(notification.isRead()).isTrue();
 	}
 
+	@Test
+	@DisplayName("읽지 않은 알림 존재 여부를 확인한다.")
+	void checkUnreadNotificationIsPresent() {
+		// given
+		Member pastor = createMember("1", "이준영", Division.DANIEL);
+		memberRepository.save(pastor);
+
+		List<Notification> danielNotifications = IntStream.rangeClosed(1, 3)
+			.mapToObj(i ->
+				createNotification(
+					i + "번째 심방 보고서가 등록되었습니다.",
+					pastor
+				)
+			).toList();
+		notificationRepository.saveAll(danielNotifications);
+
+		// when
+		Boolean result = notificationService.checkUnreadNotificationIsPresent(pastor.getUniqueId());
+
+		// then
+		assertThat(result).isTrue();
+	}
+
 	private Member createMember(String uniqueId, String name, Division division) {
 		return Member.builder()
 			.uniqueId(uniqueId)
